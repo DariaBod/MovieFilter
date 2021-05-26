@@ -24,9 +24,9 @@ public class Filter extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment,container,false);
+        final View view = inflater.inflate(R.layout.fragment,container,false);
         Bundle content = getArguments(); //получаем из адаптера контент для заполнения полей разметки
-        ImageView filter1, filter2, filter3;
+        final ImageView filter1, filter2, filter3;
         TextView filname1, filname2, filname3;
         filname1 = view.findViewById(R.id.filname1); //текстовое поле
         filname1.setText(content.getString("filname1"));
@@ -35,14 +35,17 @@ public class Filter extends Fragment {
         filname3 = view.findViewById(R.id.filname3); //текстовое поле
         filname3.setText(content.getString("filname3"));//заполняем данными из а-списка по ключу year*/
         filter1 = view.findViewById(R.id.filter1); // поле для картинки
-        filter1.setImageResource(content.getInt("fil1")); //заполняем данными по ключу photo
-        filter1.setTag(content.getInt("fil1"));
+        filter1.setImageResource(content.getInt("fil1"));
+        filter1.setTag(content.getInt("tag1"));
         filter2 = view.findViewById(R.id.filter2); // поле для картинки
         filter2.setImageResource(content.getInt("fil2")); //заполня
-        filter2.setTag(content.getInt("fil2"));
+        filter2.setTag(null);
+        filter2.setTag(content.getInt("tag2"));
         filter3 = view.findViewById(R.id.filter3); // поле для картинки
         filter3.setImageResource(content.getInt("fil3")); //заполня
-        filter3.setTag(content.getInt("fil3"));
+        filter3.setTag(null);
+        filter3.setTag(content.getInt("tag3"));
         return view;
     }
+
 }

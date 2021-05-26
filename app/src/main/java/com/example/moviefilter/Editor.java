@@ -16,6 +16,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.core.app.ActivityCompat;
@@ -37,6 +39,7 @@ public class Editor extends FragmentActivity {
     static final int GALLERY_CODE = 0;
     String mCurrentPhotoPath;
     Bitmap statebit;
+    int page = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +47,24 @@ public class Editor extends FragmentActivity {
         ViewPager vp=findViewById(R.id.pager);
         MyAdapt adapt = new MyAdapt(getSupportFragmentManager());
         vp.setAdapter(adapt);
+        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                                       @Override
+                                       public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                                       }
+
+                                       @Override
+                                       public void onPageSelected(int position) {
+                                        page=position;
+                                       }
+
+                                       @Override
+                                       public void onPageScrollStateChanged(int state) {
+
+                                       }
+                                   }
+
+        );
         Intent intent = getIntent();
         int photo = intent.getIntExtra("photo", 0);
         if(photo==1) {
@@ -172,35 +193,81 @@ public class Editor extends FragmentActivity {
     public void filter1(View view) {
         ImageView iv = findViewById(R.id.photo);
         ImageView f = findViewById(R.id.filter1);
-        int tag = (int) f.getTag();
-        switch (tag){
-        case (R.drawable.filt1): {
-            iv.setImageBitmap(statebit);
-            Bitmap bitmap = ((BitmapDrawable)iv.getDrawable()).getBitmap();
-            int []colors={0x61EE20D3,0x61EE20D3,0x61EE20D3,0x61EE20D3,0x68FAE30C,0x68FAE30C, 0x68FAE30C};
-            GradientDrawable gd=new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
-            //pic.setColorFilter(new PorterDuffColorFilter(R.color.firstfil, PorterDuff.Mode.SRC_ATOP));
-            doSharpen(bitmap, new float[]{ -0.15f, -0.15f, -0.15f, -0.15f, 2.2f, -0.15f, -0.15f, -0.15f, -0.15f});
-            Drawable pic=changeBitmapContrastBrightness(bitmap, (float) 1.5,-40);
-            //Drawable pic= new BitmapDrawable(getResources(), bitmap);
-            Drawable[] mas={pic,gd};
-            LayerDrawable ld=new LayerDrawable(mas);
-            //слегка понижаю яркость
-            //ld.setColorFilter(new PorterDuffColorFilter(Color.argb(30, 0, 0, 0), PorterDuff.Mode.SRC_ATOP));
-            iv.setImageDrawable(ld);
-            break;
-        }
+        Drawable draw = f.getDrawable();
+        Log.d("MyTag", String.valueOf(page));
+        switch(page){
+            case(0):{
+                iv.setImageBitmap(statebit);
+                Bitmap bitmap = ((BitmapDrawable)iv.getDrawable()).getBitmap();
+                int []colors={0x61EE20D3,0x61EE20D3,0x61EE20D3,0x61EE20D3,0x68FAE30C,0x68FAE30C, 0x68FAE30C};
+                GradientDrawable gd=new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
+                //pic.setColorFilter(new PorterDuffColorFilter(R.color.firstfil, PorterDuff.Mode.SRC_ATOP));
+                doSharpen(bitmap, new float[]{ -0.15f, -0.15f, -0.15f, -0.15f, 2.2f, -0.15f, -0.15f, -0.15f, -0.15f});
+                Drawable pic=changeBitmapContrastBrightness(bitmap, (float) 1.5,-40);
+                //Drawable pic= new BitmapDrawable(getResources(), bitmap);
+                Drawable[] mas={pic,gd};
+                LayerDrawable ld=new LayerDrawable(mas);
+                //слегка понижаю яркость
+                //ld.setColorFilter(new PorterDuffColorFilter(Color.argb(30, 0, 0, 0), PorterDuff.Mode.SRC_ATOP));
+                iv.setImageDrawable(ld);
+                break;
+            }
+            case(1):{
+                iv.setImageBitmap(statebit);
+                Bitmap bitmap = ((BitmapDrawable)iv.getDrawable()).getBitmap();
+                Drawable pic=changeBitmapContrastBrightness(bitmap, (float)1.1,-50);
+                int []colors={0x3BFA9E21,0x23FC7922, 0x23BE5616, 0x238B3E10, 0x237C340F};
+                GradientDrawable gd=new GradientDrawable(GradientDrawable.Orientation.TR_BL, colors);
+                Drawable[] mas={pic,gd};
+                LayerDrawable ld=new LayerDrawable(mas);
+                iv.setImageDrawable(ld);
+                break;
+            }
+            case(2):{
+                iv.setImageBitmap(statebit);
+                Bitmap bitmap = ((BitmapDrawable)iv.getDrawable()).getBitmap();
+                Drawable pic=changeBitmapContrastBrightness(bitmap, (float)1.2,-50);
+                int []colors={0x5E2F19F7, 0x5E2F19F7, 0x5E2F19F7,0x5EA219F7, 0x5EF719C7,0x5EF719C7,0x5EA219F7, 0x5E2F19F7,0x5E2F19F7};
+                GradientDrawable gd=new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
+                int [] colors2={0x3B2F19F7,0x002F19F7, 0x002F19F7,0x002F19F7,0x002F19F7,0x002F19F7};
+                GradientDrawable gd2=new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors2);
+                Drawable[] mas={pic,gd, gd2};
+                LayerDrawable ld=new LayerDrawable(mas);
+                iv.setImageDrawable(ld);
+                break;
+            }
         }
     }
 
     public void filter2(View view) {
         ImageView iv = findViewById(R.id.photo);
         ImageView f = findViewById(R.id.filter2);
-        int tag = (int) f.getTag();
-        switch (tag){
-            case (R.drawable.filt2): {
+        switch (page){
+            case (0): {
                 iv.setImageBitmap(statebit);
                 iv.getDrawable().setColorFilter(new PorterDuffColorFilter(0x48EE9695, PorterDuff.Mode.SRC_ATOP));
+                break;
+            }
+            case(1):{
+                iv.setImageBitmap(statebit);
+                Bitmap bitmap = ((BitmapDrawable)iv.getDrawable()).getBitmap();
+                Drawable pic=changeBitmapContrastBrightness(bitmap, (float)1.0,-30);
+                int []colors={0x23696363,0x276F6A6A, 0x11FC4322, 0x11FC4322,0x11FC4322,0x11FC4322,0x276F6A6A,0x23696363};
+                GradientDrawable gd=new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
+                Drawable[] mas={pic,gd};
+                LayerDrawable ld=new LayerDrawable(mas);
+                iv.setImageDrawable(ld);
+                break;
+            }
+            case(2):{
+                iv.setImageBitmap(statebit);
+                Bitmap bitmap = ((BitmapDrawable)iv.getDrawable()).getBitmap();
+                Drawable pic=changeBitmapContrastBrightness(bitmap, (float)1.0,-30);
+                int []colors={0x349B19F7, 0x22F5E190, 0x31F719C7, 0x31CE19F7, 0x314919F7, 0x314919F7, 0x314919F7, 0x314919F7};
+                GradientDrawable gd=new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors);
+                Drawable[] mas={pic,gd};
+                LayerDrawable ld=new LayerDrawable(mas);
+                iv.setImageDrawable(ld);
                 break;
             }
         }
@@ -208,9 +275,8 @@ public class Editor extends FragmentActivity {
     public void filter3(View view) {
         ImageView iv = findViewById(R.id.photo);
         ImageView f = findViewById(R.id.filter3);
-        int tag = (int) f.getTag();
-        switch (tag){
-            case (R.drawable.filt3): {
+        switch (page){
+            case (0): {
                 iv.setImageBitmap(statebit);
                 Bitmap bitmap = ((BitmapDrawable)iv.getDrawable()).getBitmap();
                 doSharpen(bitmap, new float[]{ -0.15f, -0.15f, -0.15f, -0.15f, 2.2f, -0.15f, -0.15f, -0.15f, -0.15f});
@@ -220,6 +286,28 @@ public class Editor extends FragmentActivity {
                 Drawable[] mas={pic,gd};
                 LayerDrawable ld=new LayerDrawable(mas);
                 //pic.setColorFilter(0x59BED4F0, PorterDuff.Mode.SRC_ATOP);
+                iv.setImageDrawable(ld);
+                break;
+            }
+            case(1):{
+                iv.setImageBitmap(statebit);
+                Bitmap bitmap = ((BitmapDrawable)iv.getDrawable()).getBitmap();
+                Drawable pic=changeBitmapContrastBrightness(bitmap, (float)1.08,-20);
+                int []colors={0x2FF7A419,0x2FF7A419};
+                GradientDrawable gd=new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
+                Drawable[] mas={pic,gd};
+                LayerDrawable ld=new LayerDrawable(mas);
+                iv.setImageDrawable(ld);
+                break;
+            }
+            case(2):{
+                iv.setImageBitmap(statebit);
+                Bitmap bitmap = ((BitmapDrawable)iv.getDrawable()).getBitmap();
+                Drawable pic=changeBitmapContrastBrightness(bitmap, (float)1.3,10);
+                int []colors={0x5B90C9F5,0x1D90E9F5, 0x1D90E9F5, 0x5B90C9F5, 0x5B90C9F5};
+                GradientDrawable gd=new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
+                Drawable[] mas={pic,gd};
+                LayerDrawable ld=new LayerDrawable(mas);
                 iv.setImageDrawable(ld);
                 break;
             }

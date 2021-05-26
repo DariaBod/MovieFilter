@@ -8,17 +8,17 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 public class MyAdapt extends FragmentStatePagerAdapter {
     //Данные для заполнения контента
-    String []text1 = {"Неоновый демон"};
-    String []text2 = {"Отель 'Гранд Будапешт'"};
-    String []text3 = {"Сумерки"};
-    int []photo1 = {R.drawable.filt1};
-    int[]photo2={ R.drawable.filt2};
-    int[]photo3={R.drawable.filt3};
+    String []text1 = {"Неоновый демон","Титаник","Бегущий по лезвию"};
+    String []text2 = {"Отель 'Гранд Будапешт'","Великий Гэтсби","Ла-Ла Ленд"};
+    String []text3 = {"Сумерки", "Королевство полной луны", "Властелин Колец"};
+    int []photo1 = {R.drawable.filt1, R.drawable.filt4, R.drawable.filt7};
+    int[]photo2={ R.drawable.filt2, R.drawable.filt5, R.drawable.filt8};
+    int[]photo3={R.drawable.filt3, R.drawable.filt6, R.drawable.filt9};
     //конструктор
     public MyAdapt(@NonNull FragmentManager fm) {
         super(fm);   }
 
-    //создаём фрагмент на основе класса Cake.java
+
     @NonNull
     @Override
     public Fragment getItem(int position) {
@@ -36,6 +36,6 @@ public class MyAdapt extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 1;//photo.length;
+        return photo1.length;
     }// количество экранов пейджера
 }

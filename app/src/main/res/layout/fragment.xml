@@ -18,13 +18,14 @@
     ></ImageView>
     <ImageView
             android:id="@+id/filter1"
-            android:layout_width="128dp"
-            android:layout_height="86dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="4dp"
-            android:layout_alignParentTop="true"
+            android:layout_width="133dp"
+            android:layout_height="73dp"
+            android:scaleType="centerCrop"
             android:onClick="filter1"
-            android:layout_marginTop="16dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="22dp"
     ></ImageView>
     <TextView android:layout_width="137dp"
               android:id="@+id/filname1"
@@ -52,13 +53,14 @@
     ></ImageView>
     <ImageView
             android:id="@+id/filter2"
-            android:layout_width="127dp"
-            android:layout_height="86dp"
+            android:layout_width="130dp"
+            android:layout_height="73dp"
+            android:scaleType="centerCrop"
             android:onClick="filter2"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="142dp"
+            android:layout_marginLeft="140dp"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="22dp"
     ></ImageView>
     <TextView android:layout_width="137dp"
               android:id="@+id/filname2"
@@ -86,13 +88,14 @@
     ></ImageView>
     <ImageView
             android:id="@+id/filter3"
-            android:layout_width="128dp"
-            android:layout_height="86dp"
+            android:layout_width="129dp"
+            android:layout_height="73dp"
             android:layout_alignParentLeft="true"
+            android:scaleType="centerCrop"
             android:onClick="filter3"
-            android:layout_marginLeft="279dp"
+            android:layout_marginLeft="277dp"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="22dp"
     ></ImageView>
     <TextView android:layout_width="137dp"
               android:id="@+id/filname3"
