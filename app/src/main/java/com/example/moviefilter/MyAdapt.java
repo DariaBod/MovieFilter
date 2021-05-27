@@ -25,13 +25,13 @@ public class MyAdapt extends FragmentStatePagerAdapter {
         Bundle content = new Bundle(); //данные передаются в виде ассоциативного списка из элементов массивов с индексом position
         content.putInt("fil1",photo1[position]);
         content.putInt("fil2",photo2[position]);
-        content.putInt("fil3",photo3[position]);// ключ - "photo", значение взято из массива photo
-        content.putString("filname1",text1[position]);// ключ - "year", значение взято из массива year
+        content.putInt("fil3",photo3[position]);
+        content.putString("filname1",text1[position]);
         content.putString("filname2",text2[position]);
         content.putString("filname3",text3[position]);
-        Filter info = new Filter(); //создаём фрагмент Cake.java
+        Filter info = new Filter(); //создаём фрагмент Filter.java
         info.setArguments(content); //заполняем его поля значениями
-        return info; // передаём в onCreateView в Cake.java
+        return info; // передаём в onCreateView в Filter.java
     }
 
     @Override

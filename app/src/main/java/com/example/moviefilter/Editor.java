@@ -39,6 +39,8 @@ public class Editor extends FragmentActivity {
     static final int GALLERY_CODE = 0;
     String mCurrentPhotoPath;
     Bitmap statebit;
+    int rotation=0;
+    Bitmap currentbit;
     int page = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +77,7 @@ public class Editor extends FragmentActivity {
         }
     }
     public void openGallery(Editor view){
+        askPermission();
         Intent GalleryIntent = null;
         GalleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         GalleryIntent.setType("image/*");
@@ -144,7 +147,6 @@ public class Editor extends FragmentActivity {
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(intent, TAKE_PICTURE_REQUEST);}
                catch(FileUriExposedException e){
-                  Log.d("MyTag", "You loose uri");
                }
             }
     }
@@ -180,6 +182,7 @@ public class Editor extends FragmentActivity {
         Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth(), bitmap.getHeight(), true);
         Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
         iv.setImageBitmap(rotatedBitmap);
+        rotation=1;
     }
     public void leftRotate(View view){
         ImageView iv = findViewById(R.id.photo);
@@ -189,6 +192,7 @@ public class Editor extends FragmentActivity {
         Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth(), bitmap.getHeight(), true);
         Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
         iv.setImageBitmap(rotatedBitmap);
+        rotation=1;
     }
     public void filter1(View view) {
         ImageView iv = findViewById(R.id.photo);
@@ -209,7 +213,10 @@ public class Editor extends FragmentActivity {
                 LayerDrawable ld=new LayerDrawable(mas);
                 //слегка понижаю яркость
                 //ld.setColorFilter(new PorterDuffColorFilter(Color.argb(30, 0, 0, 0), PorterDuff.Mode.SRC_ATOP));
-                iv.setImageDrawable(ld);
+                Bitmap b = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+                ld.setBounds(0, 0, bitmap.getWidth(), bitmap.getHeight());
+                ld.draw(new Canvas(b));
+                iv.setImageBitmap(b);
                 break;
             }
             case(1):{
@@ -220,7 +227,10 @@ public class Editor extends FragmentActivity {
                 GradientDrawable gd=new GradientDrawable(GradientDrawable.Orientation.TR_BL, colors);
                 Drawable[] mas={pic,gd};
                 LayerDrawable ld=new LayerDrawable(mas);
-                iv.setImageDrawable(ld);
+                Bitmap b = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+                ld.setBounds(0, 0, bitmap.getWidth(), bitmap.getHeight());
+                ld.draw(new Canvas(b));
+                iv.setImageBitmap(b);
                 break;
             }
             case(2):{
@@ -233,7 +243,10 @@ public class Editor extends FragmentActivity {
                 GradientDrawable gd2=new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors2);
                 Drawable[] mas={pic,gd, gd2};
                 LayerDrawable ld=new LayerDrawable(mas);
-                iv.setImageDrawable(ld);
+                Bitmap b = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+                ld.setBounds(0, 0, bitmap.getWidth(), bitmap.getHeight());
+                ld.draw(new Canvas(b));
+                iv.setImageBitmap(b);
                 break;
             }
         }
@@ -246,6 +259,12 @@ public class Editor extends FragmentActivity {
             case (0): {
                 iv.setImageBitmap(statebit);
                 iv.getDrawable().setColorFilter(new PorterDuffColorFilter(0x48EE9695, PorterDuff.Mode.SRC_ATOP));
+                Drawable dr=iv.getDrawable();
+                Bitmap bitmap = ((BitmapDrawable)iv.getDrawable()).getBitmap();
+                Bitmap b = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+                dr.setBounds(0, 0, bitmap.getWidth(), bitmap.getHeight());
+                dr.draw(new Canvas(b));
+                iv.setImageBitmap(b);
                 break;
             }
             case(1):{
@@ -256,7 +275,10 @@ public class Editor extends FragmentActivity {
                 GradientDrawable gd=new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
                 Drawable[] mas={pic,gd};
                 LayerDrawable ld=new LayerDrawable(mas);
-                iv.setImageDrawable(ld);
+                Bitmap b = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+                ld.setBounds(0, 0, bitmap.getWidth(), bitmap.getHeight());
+                ld.draw(new Canvas(b));
+                iv.setImageBitmap(b);
                 break;
             }
             case(2):{
@@ -267,7 +289,10 @@ public class Editor extends FragmentActivity {
                 GradientDrawable gd=new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colors);
                 Drawable[] mas={pic,gd};
                 LayerDrawable ld=new LayerDrawable(mas);
-                iv.setImageDrawable(ld);
+                Bitmap b = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+                ld.setBounds(0, 0, bitmap.getWidth(), bitmap.getHeight());
+                ld.draw(new Canvas(b));
+                iv.setImageBitmap(b);
                 break;
             }
         }
@@ -286,7 +311,10 @@ public class Editor extends FragmentActivity {
                 Drawable[] mas={pic,gd};
                 LayerDrawable ld=new LayerDrawable(mas);
                 //pic.setColorFilter(0x59BED4F0, PorterDuff.Mode.SRC_ATOP);
-                iv.setImageDrawable(ld);
+                Bitmap b = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+                ld.setBounds(0, 0, bitmap.getWidth(), bitmap.getHeight());
+                ld.draw(new Canvas(b));
+                iv.setImageBitmap(b);
                 break;
             }
             case(1):{
@@ -297,7 +325,10 @@ public class Editor extends FragmentActivity {
                 GradientDrawable gd=new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
                 Drawable[] mas={pic,gd};
                 LayerDrawable ld=new LayerDrawable(mas);
-                iv.setImageDrawable(ld);
+                Bitmap b = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+                ld.setBounds(0, 0, bitmap.getWidth(), bitmap.getHeight());
+                ld.draw(new Canvas(b));
+                iv.setImageBitmap(b);
                 break;
             }
             case(2):{
@@ -308,7 +339,10 @@ public class Editor extends FragmentActivity {
                 GradientDrawable gd=new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
                 Drawable[] mas={pic,gd};
                 LayerDrawable ld=new LayerDrawable(mas);
-                iv.setImageDrawable(ld);
+                Bitmap b = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+                ld.setBounds(0, 0, bitmap.getWidth(), bitmap.getHeight());
+                ld.draw(new Canvas(b));
+                iv.setImageBitmap(b);
                 break;
             }
         }
@@ -351,7 +385,7 @@ public class Editor extends FragmentActivity {
         ImageView iv = findViewById(R.id.photo);
         Bitmap bitmap = ((BitmapDrawable)iv.getDrawable()).getBitmap();
         MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "MFPhoto" , "");
-        statebit=bitmap;
+        if(rotation==1) statebit=bitmap;
     }
     public void rollback(View view) {
         ImageView iv = findViewById(R.id.photo);

@@ -33,18 +33,13 @@ public class Filter extends Fragment {
         filname2 = view.findViewById(R.id.filname2); //текстовое поле
         filname2.setText(content.getString("filname2"));
         filname3 = view.findViewById(R.id.filname3); //текстовое поле
-        filname3.setText(content.getString("filname3"));//заполняем данными из а-списка по ключу year*/
+        filname3.setText(content.getString("filname3"));//заполняем данными из а-списка по ключу*/
         filter1 = view.findViewById(R.id.filter1); // поле для картинки
         filter1.setImageResource(content.getInt("fil1"));
-        filter1.setTag(content.getInt("tag1"));
         filter2 = view.findViewById(R.id.filter2); // поле для картинки
-        filter2.setImageResource(content.getInt("fil2")); //заполня
-        filter2.setTag(null);
-        filter2.setTag(content.getInt("tag2"));
+        filter2.setImageResource(content.getInt("fil2"));
         filter3 = view.findViewById(R.id.filter3); // поле для картинки
-        filter3.setImageResource(content.getInt("fil3")); //заполня
-        filter3.setTag(null);
-        filter3.setTag(content.getInt("tag3"));
+        filter3.setImageResource(content.getInt("fil3"));
         return view;
     }
 
