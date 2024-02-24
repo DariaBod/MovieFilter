@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.percentlayout.widget.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DEF4FF"
+    android:hapticFeedbackEnabled="true"
+    tools:context=".activity.AIStudio">
+
+    <ImageView
+        android:id="@+id/photo_for_example"
+        android:layout_width="match_parent"
+        android:layout_height="185dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="0dp"
+        app:layout_heightPercent="39%"
+        app:layout_marginLeftPercent="0%"
+        app:layout_marginTopPercent="8%"></ImageView>
+
+    <ImageView
+        android:id="@+id/photo_for_filter"
+        android:layout_width="match_parent"
+        android:layout_height="185dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="186dp"
+        app:layout_heightPercent="39%"
+        app:layout_marginLeftPercent="0%"
+        app:layout_marginTopPercent="47%"></ImageView>
+
+    <Button
+        android:id="@+id/back_fs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/back"
+        android:onClick="backFS"
+        app:layout_heightPercent="4%"
+        app:layout_marginLeftPercent="0%"
+        app:layout_marginTopPercent="0%"
+        app:layout_widthPercent="10%" />
+    <Button
+        app:layout_widthPercent="60%"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        app:layout_marginTopPercent="20%"
+        app:layout_heightPercent="10%"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/choose_photo"
+        android:text="Нажмите для выбора фото-примера из галереи"
+        android:onClick="openGallery"
+        android:background="#8F33A9E9"
+        app:layout_marginLeftPercent="20%"/>
+    <Button
+        android:id="@+id/save_fs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/save_1_black"
+        android:onClick="saveFS"
+        app:layout_heightPercent="4%"
+        app:layout_marginLeftPercent="20%"
+        app:layout_marginTopPercent="0%"
+        app:layout_widthPercent="10%" />
+    <Button
+        app:layout_widthPercent="40%"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        app:layout_marginTopPercent="88%"
+        app:layout_heightPercent="6%"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/created_fiter"
+        android:onClick="createAIFilter"
+        android:text="Создать AI фильтр"
+        android:background="#8F33A9E9"
+        app:layout_marginLeftPercent="30%"/>
+
+</androidx.percentlayout.widget.PercentRelativeLayout>

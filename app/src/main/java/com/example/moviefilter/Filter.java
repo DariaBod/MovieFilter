@@ -1,30 +1,26 @@
 package com.example.moviefilter;
 
-import android.graphics.Bitmap;
-import android.media.Image;
-import android.util.Log;
-import android.widget.ImageView;
-import android.widget.TextView;
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import java.util.ArrayList;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 public class Filter extends Fragment {
 
-    public Filter(){};
+    public Filter() {
+    }
 
     //создаём и заполняем разметку для текущего элемента
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment,container,false);
+        final View view = inflater.inflate(R.layout.fragment, container, false);
         Bundle content = getArguments(); //получаем из адаптера контент для заполнения полей разметки
         final ImageView filter1, filter2, filter3;
         TextView filname1, filname2, filname3;
@@ -42,5 +38,4 @@ public class Filter extends Fragment {
         filter3.setImageResource(content.getInt("fil3"));
         return view;
     }
-
 }
