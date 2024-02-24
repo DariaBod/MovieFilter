@@ -1,5 +1,8 @@
 package com.example.moviefilter.activity;
 
+import static com.example.moviefilter.ImageBeautifier.changeBitmapContrastBrightness;
+import static com.example.moviefilter.ImageBeautifier.doSharpen;
+
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -265,7 +268,7 @@ public class Editor extends FragmentActivity {
                         color(R.color.filter1p0col1), color(R.color.filter1p0col2), color(R.color.filter1p0col2),
                         color(R.color.filter1p0col2)};
                 GradientDrawable gd = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
-                bitmap = doSharpen(bitmap, new float[]{-0.15f, -0.15f, -0.15f, -0.15f, 2.2f, -0.15f, -0.15f, -0.15f, -0.15f});
+                bitmap = doSharpen(bitmap, new float[]{-0.15f, -0.15f, -0.15f, -0.15f, 2.2f, -0.15f, -0.15f, -0.15f, -0.15f}, this);
                 Drawable pic = changeBitmapContrastBrightness(bitmap, (float) 1.5, -40);
                 Drawable[] mas = {pic, gd};
                 LayerDrawable ld = new LayerDrawable(mas);
@@ -451,7 +454,7 @@ public class Editor extends FragmentActivity {
             case (0): {
                 iv.setImageBitmap(statebit);
                 Bitmap bitmap = ((BitmapDrawable) iv.getDrawable()).getBitmap();
-                bitmap = doSharpen(bitmap, new float[]{-0.15f, -0.15f, -0.15f, -0.15f, 2.2f, -0.15f, -0.15f, -0.15f, -0.15f});
+                bitmap = doSharpen(bitmap, new float[]{-0.15f, -0.15f, -0.15f, -0.15f, 2.2f, -0.15f, -0.15f, -0.15f, -0.15f}, this);
                 Drawable pic = changeBitmapContrastBrightness(bitmap, (float) 1.5, -40);
                 int[] colors = {color(R.color.filter3p0col1), color(R.color.filter3p0col2)};
                 GradientDrawable gd = new GradientDrawable(GradientDrawable.Orientation.BL_TR, colors);
@@ -496,7 +499,7 @@ public class Editor extends FragmentActivity {
             case (3): {
                 iv.setImageBitmap(statebit);
                 Bitmap bitmap = ((BitmapDrawable) iv.getDrawable()).getBitmap();
-                bitmap = doSharpen(bitmap, new float[]{-0.15f, -0.15f, -0.15f, -0.15f, 2.2f, -0.15f, -0.15f, -0.15f, -0.15f});
+                bitmap = doSharpen(bitmap, new float[]{-0.15f, -0.15f, -0.15f, -0.15f, 2.2f, -0.15f, -0.15f, -0.15f, -0.15f}, this);
                 Drawable pic = changeBitmapContrastBrightness(bitmap, (float) 1.45, -40);
                 int[] colors = {color(R.color.filter12p3col1), color(R.color.filter12p3col1)};
                 GradientDrawable gd = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
@@ -511,7 +514,7 @@ public class Editor extends FragmentActivity {
             case (4): {
                 iv.setImageBitmap(statebit);
                 Bitmap bitmap = ((BitmapDrawable) iv.getDrawable()).getBitmap();
-                bitmap = doSharpen(bitmap, new float[]{-0.15f, -0.15f, -0.15f, -0.15f, 2.2f, -0.15f, -0.15f, -0.15f, -0.15f});
+                bitmap = doSharpen(bitmap, new float[]{-0.15f, -0.15f, -0.15f, -0.15f, 2.2f, -0.15f, -0.15f, -0.15f, -0.15f}, this);
                 Drawable pic = changeBitmapContrastBrightness(bitmap, (float) 1.35, -5);
                 int[] colors = {color(R.color.filter15p4col1), color(R.color.filter15p4col1)};
                 GradientDrawable gd = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
@@ -527,7 +530,7 @@ public class Editor extends FragmentActivity {
             case (5): {
                 iv.setImageBitmap(statebit);
                 Bitmap bitmap = ((BitmapDrawable) iv.getDrawable()).getBitmap();
-                bitmap = doSharpen(bitmap, new float[]{-0.15f, -0.15f, -0.15f, -0.15f, 2.2f, -0.15f, -0.15f, -0.15f, -0.15f});
+                bitmap = doSharpen(bitmap, new float[]{-0.15f, -0.15f, -0.15f, -0.15f, 2.2f, -0.15f, -0.15f, -0.15f, -0.15f}, this);
                 Drawable pic = changeBitmapContrastBrightness(bitmap, (float) 1.4, -50);
                 int[] colors = {color(R.color.filter18p5col1), color(R.color.filter18p5col1)};
                 GradientDrawable gd = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
@@ -546,39 +549,6 @@ public class Editor extends FragmentActivity {
         return getResources().getColor(id);
     }
 
-    public Bitmap doSharpen(Bitmap original, float[] radius) {
-        Bitmap bitmap = Bitmap.createBitmap(
-                original.getWidth(), original.getHeight(),
-                Bitmap.Config.ARGB_8888);
-
-        RenderScript rs = RenderScript.create(Editor.this);
-
-        Allocation allocIn = Allocation.createFromBitmap(rs, original);
-        Allocation allocOut = Allocation.createFromBitmap(rs, bitmap);
-
-        ScriptIntrinsicConvolve3x3 convolution
-                = ScriptIntrinsicConvolve3x3.create(rs, Element.U8_4(rs));
-        convolution.setInput(allocIn);
-        convolution.setCoefficients(radius);
-        convolution.forEach(allocOut);
-        allocOut.copyTo(bitmap);
-        rs.destroy();
-        return bitmap;
-    }
-
-    public Drawable changeBitmapContrastBrightness(Bitmap bmp, float contrast, float brightness) {
-        ColorMatrix cm = new ColorMatrix(
-                new float[]{
-                        contrast, 0, 0, 0, brightness,
-                        0, contrast, 0, 0, brightness,
-                        0, 0, contrast, 0, brightness,
-                        0, 0, 0, 1, 0
-                }
-        );
-        Drawable pic = new BitmapDrawable(getResources(), bmp);
-        pic.setColorFilter(new ColorMatrixColorFilter(cm));
-        return pic;
-    }
 
     public void save(View view) {
         ImageView iv = findViewById(R.id.photo);
